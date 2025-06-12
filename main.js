@@ -51,11 +51,22 @@ async function generateInvoice() {
   const businessName = document.getElementById('business-name').value.trim();
   const clientName = document.getElementById('client-name').value.trim();
   const invoiceDate = document.getElementById('invoice-date').value;
-  const dueDate = document.getElementById('due-date').value;
   const description = document.getElementById('description').value.trim();
   const amount = document.getElementById('amount').value.trim();
+  const currency = document.getElementById('currency').value;
   const paymentMethods = document.getElementById('payment-methods').value.trim();
   const contactInfo = document.getElementById('contact-info').value.trim();
+
+  // Currency symbols mapping
+  const currencySymbols = {
+    USD: "$",
+    INR: "₹",
+    RUB: "₽",
+    IDR: "Rp",
+    BRL: "R$"
+  };
+
+  const symbol = currencySymbols[currency] || currency;
 
   if (!clientName || !amount || !businessName) {
     alert('Please fill in at least: Your Name, Client Name, and Amount.');
@@ -83,17 +94,15 @@ async function generateInvoice() {
   if (invoiceDate) {
     doc.text(`Invoice Date: ${invoiceDate}`, 10, y); y += 7;
   }
-  if (dueDate) {
-    doc.text(`Due Date: ${dueDate}`, 10, y); y += 10;
-  }
 
   // Description
   if (description) {
+    y += 7;
     doc.text(`Description: ${description}`, 10, y); y += 7;
   }
 
   // Amount
-  doc.text(`Amount Due: $${amount}`, 10, y); y += 10;
+  doc.text(`Amount Due: ${symbol}${amount}`, 10, y); y += 10;
 
   // Payment Methods
   if (paymentMethods) {
