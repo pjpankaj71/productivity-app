@@ -98,6 +98,10 @@ button {
   border-radius: 16px;
 }
 
+.invoice-section input {
+  margin-bottom: 12px;
+}
+
 .invoice-label {
   display: block;
   margin-bottom: 5px;
