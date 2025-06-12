@@ -11,25 +11,33 @@
   <div class="container">
     <header>
       <h1>Productivity Mini App</h1>
-      <p id="user-info">Loading...</p>
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p class="loading">Loading...</p>
+      </div>
     </header>
 
-    <section id="task-section">
+    <section class="task-section">
       <h2>Tasks</h2>
       <div class="task-input">
         <input type="text" id="new-task" placeholder="Add a new task..." />
-        <button onclick="addTask()">Add</button>
+        <button onclick="addTask()" class="add-task-btn">Add</button>
       </div>
-      <ul id="task-list"></ul>
+      <ul id="task-list" class="task-list"></ul>
     </section>
 
-    <section id="pdf-section">
+    <section class="invoice-section">
       <h2>Generate Invoice</h2>
-      <input type="text" id="client-name" placeholder="Client Name" />
-      <input type="number" id="amount" placeholder="Amount" />
-      <button onclick="generateInvoice()">Generate PDF</button>
+      <label class="invoice-label">Client Name</label>
+      <input type="text" id="client-name" placeholder="John Doe" />
+      <label class="invoice-label">Amount</label>
+      <input type="number" id="amount" placeholder="100" />
+      <button onclick="generateInvoice()" class="generate-pdf-btn">Generate PDF</button>
     </section>
   </div>
+  <footer>
+    @XProductivityBot
+  </footer>
   <script src="main.js"></script>
 </body>
 </html>
