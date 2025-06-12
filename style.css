@@ -58,7 +58,8 @@ h1 {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+select {
   padding: 12px;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
@@ -67,7 +68,8 @@ input[type="number"] {
 }
 
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
@@ -98,15 +100,30 @@ button {
   border-radius: 16px;
 }
 
-.invoice-section input {
-  margin-bottom: 12px;
-}
-
 .invoice-label {
   display: block;
   margin-bottom: 5px;
   font-size: 13px;
   color: #666;
+}
+
+.amount-currency-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.amount-currency-group input,
+.amount-currency-group select {
+  flex: 1;
+}
+
+select {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
 }
 
 .generate-pdf-btn {
@@ -156,34 +173,4 @@ footer {
   background: #222;
   color: #ddd;
   margin-top: 30px;
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 15px;
-  }
-  .task-input input {
-    flex: 1;
-    min-width: 0;
-  }
-}
-
-
-.amount-currency-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.amount-currency-group input,
-.amount-currency-group select {
-  flex: 1;
-}
-
-select {
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 14px;
-  background: white;
 }
