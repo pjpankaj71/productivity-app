@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Productivity Mini App</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Productivity Mini App</h1>
+      <p id="user-info">Loading...</p>
+    </header>
+
+    <section id="task-section">
+      <h2>Tasks</h2>
+      <div class="task-input">
+        <input type="text" id="new-task" placeholder="Add a new task..." />
+        <button onclick="addTask()">Add</button>
+      </div>
+      <ul id="task-list"></ul>
+    </section>
+
+    <section id="pdf-section">
+      <h2>Generate Invoice</h2>
+      <input type="text" id="client-name" placeholder="Client Name" />
+      <input type="number" id="amount" placeholder="Amount" />
+      <button onclick="generateInvoice()">Generate PDF</button>
+    </section>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
