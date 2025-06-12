@@ -2,8 +2,10 @@
 window.Telegram.WebApp.ready();
 const user = Telegram.WebApp.initDataUnsafe?.user;
 
-document.getElementById('user-info').innerText = 
-  user ? `Welcome, ${user.first_name}!` : "Not logged in";
+// Remove loading message after 1.5 seconds
+setTimeout(() => {
+  document.querySelector('.loading').style.display = 'none';
+}, 1500);
 
 // Task Manager
 function loadTasks() {
@@ -12,9 +14,10 @@ function loadTasks() {
   list.innerHTML = '';
   tasks.forEach((task, index) => {
     const li = document.createElement('li');
+    li.className = 'task-item';
     li.innerHTML = `
       ${task}
-      <button onclick="deleteTask(${index})">✕</button>
+      <button onclick="deleteTask(${index})" class="delete-btn">✕</button>
     `;
     list.appendChild(li);
   });
