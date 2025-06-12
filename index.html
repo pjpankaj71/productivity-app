@@ -27,13 +27,34 @@
     </section>
 
     <section class="invoice-section">
-      <h2>Generate Invoice</h2>
-      <label class="invoice-label">Client Name</label>
-      <input type="text" id="client-name" placeholder="John Doe" />
-      <label class="invoice-label">Amount</label>
-      <input type="number" id="amount" placeholder="100" />
-      <button onclick="generateInvoice()" class="generate-pdf-btn">Generate PDF</button>
-    </section>
+  <h2>Generate Invoice</h2>
+
+  <label class="invoice-label">Your Name / Business Name</label>
+  <input type="text" id="business-name" placeholder="e.g., John Doe or JD Web Studio" />
+
+  <label class="invoice-label">Client Name</label>
+  <input type="text" id="client-name" placeholder="John Doe" />
+
+  <label class="invoice-label">Invoice Date</label>
+  <input type="date" id="invoice-date" />
+
+  <label class="invoice-label">Due Date</label>
+  <input type="date" id="due-date" />
+
+  <label class="invoice-label">Description of Work</label>
+  <input type="text" id="description" placeholder="e.g., Website design, 5 articles" />
+
+  <label class="invoice-label">Amount (USD)</label>
+  <input type="number" id="amount" placeholder="100" />
+
+  <label class="invoice-label">Payment Methods</label>
+  <input type="text" id="payment-methods" placeholder="e.g., Bank Transfer, PayPal" />
+
+  <label class="invoice-label">Your Contact Info</label>
+  <input type="text" id="contact-info" placeholder="Email: john@example.com | Phone: +123456789" />
+
+  <button onclick="generateInvoice()" class="generate-pdf-btn">Generate PDF</button>
+</section>
   </div>
   <footer>
     @XProductivityBot
