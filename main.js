@@ -2,7 +2,7 @@
 window.Telegram.WebApp.ready();
 const user = Telegram.WebApp.initDataUnsafe?.user;
 
-// Remove loading message after 1.5 seconds
+// Hide loading animation after 1.5 seconds
 setTimeout(() => {
   document.querySelector('.loading').style.display = 'none';
 }, 1500);
