@@ -153,3 +153,13 @@ footer {
   color: #ddd;
   margin-top: 30px;
 }
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+  .task-input input {
+    flex: 1;
+    min-width: 0;
+  }
+}
