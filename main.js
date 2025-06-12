@@ -46,16 +46,74 @@ loadTasks();
 // PDF Generator
 async function generateInvoice() {
   const { jsPDF } = window.jspdf;
-  const clientName = document.getElementById('client-name').value;
-  const amount = document.getElementById('amount').value;
+  const doc = new jsPDF();
 
-  if (!clientName || !amount) {
-    alert('Please fill in both fields');
+  const businessName = document.getElementById('business-name').value.trim();
+  const clientName = document.getElementById('client-name').value.trim();
+  const invoiceDate = document.getElementById('invoice-date').value;
+  const dueDate = document.getElementById('due-date').value;
+  const description = document.getElementById('description').value.trim();
+  const amount = document.getElementById('amount').value.trim();
+  const paymentMethods = document.getElementById('payment-methods').value.trim();
+  const contactInfo = document.getElementById('contact-info').value.trim();
+
+  if (!clientName || !amount || !businessName) {
+    alert('Please fill in at least: Your Name, Client Name, and Amount.');
     return;
   }
 
-  const doc = new jsPDF();
-  doc.text(`Invoice to: ${clientName}`, 10, 10);
-  doc.text(`Amount: $${amount}`, 10, 20);
+  let y = 20;
+
+  // Title
+  doc.setFontSize(18);
+  doc.text("INVOICE", 10, y);
+  y += 10;
+
+  // Divider
+  doc.setDrawColor(200, 200, 200);
+  doc.line(10, y, 200, y);
+  y += 10;
+
+  // Business & Client Info
+  doc.setFontSize(12);
+  doc.text(`From: ${businessName}`, 10, y); y += 7;
+  doc.text(`To: ${clientName}`, 10, y); y += 10;
+
+  // Dates
+  if (invoiceDate) {
+    doc.text(`Invoice Date: ${invoiceDate}`, 10, y); y += 7;
+  }
+  if (dueDate) {
+    doc.text(`Due Date: ${dueDate}`, 10, y); y += 10;
+  }
+
+  // Description
+  if (description) {
+    doc.text(`Description: ${description}`, 10, y); y += 7;
+  }
+
+  // Amount
+  doc.text(`Amount Due: $${amount}`, 10, y); y += 10;
+
+  // Payment Methods
+  if (paymentMethods) {
+    doc.text(`Payment Methods: ${paymentMethods}`, 10, y); y += 7;
+  }
+
+  // Contact Info
+  if (contactInfo) {
+    y += 10;
+    doc.text(`Contact Info:`, 10, y); y += 7;
+    doc.text(`${contactInfo}`, 10, y); y += 10;
+  }
+
+  // Footer
+  y += 10;
+  doc.setFillColor(240, 240, 240);
+  doc.rect(0, y, 210, 30, 'F');
+  doc.setTextColor(100, 100, 100);
+  doc.text("Thank you for your business!", 10, y + 10);
+
+  // Save PDF
   doc.save('invoice.pdf');
 }
