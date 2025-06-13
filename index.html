@@ -3,67 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Productivity Mini App</title>
+  <title>XProductivity</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <div class="container">
+  <div id="splash-screen">
+    <h1>XProductivity</h1>
+    <p>Loading tasks...</p>
+  </div>
+
+  <div class="app-container hidden" id="app">
     <header>
-      <h1>Productivity Mini App</h1>
-      <div class="loading-spinner">
-        <p class="loading">Loading...</p>
-      </div>
+      <h1>XProductivity</h1>
+      <button id="theme-toggle-btn" title="Toggle Theme">🌙</button>
     </header>
 
     <section class="task-section">
-      <h2>Tasks</h2>
+      <h2>🗂️ Tasks</h2>
       <div class="task-input">
         <input type="text" id="new-task" placeholder="Add a new task..." />
-        <button onclick="addTask()" class="add-task-btn">Add</button>
+        <button onclick="addTask()">➕ Add</button>
       </div>
-      <ul id="task-list" class="task-list"></ul>
+      <ul id="task-list"></ul>
     </section>
 
     <section class="invoice-section">
-      <h2>Generate Invoice</h2>
-
-      <label class="invoice-label">Your Name / Business Name</label>
-      <input type="text" id="business-name" placeholder="e.g., John Doe or JD Web Studio" />
-
-      <label class="invoice-label">Client Name</label>
-      <input type="text" id="client-name" placeholder="John Doe" />
-
-      <label class="invoice-label">Invoice Date</label>
+      <h2>📄 Generate Invoice</h2>
+      <input type="text" id="business-name" placeholder="Your Name / Business Name" />
+      <input type="text" id="client-name" placeholder="Client Name" />
       <input type="date" id="invoice-date" />
+      <textarea id="description" placeholder="Work Description & Amount"></textarea>
 
-      <label class="invoice-label">Description of Work</label>
-      <input type="text" id="description" placeholder="e.g., Website design, 5 articles" />
-
-      <label class="invoice-label">Amount</label>
-      <div class="amount-currency-group">
-        <input type="number" id="amount" placeholder="500" />
+      <div class="row">
+        <input type="number" id="amount" placeholder="Amount ($)" />
         <select id="currency">
-          <option value="USD" selected>USD ($)</option>
-          <option value="INR">INR (₹)</option>
-          <option value="RUB">RUB (₽)</option>
-          <option value="IDR">IDR (Rp)</option>
-          <option value="BRL">BRL (R$)</option>
+          <option value="USD ($)">USD ($)</option>
+          <option value="EUR (€)">EUR (€)</option>
+          <option value="INR (₹)">INR (₹)</option>
         </select>
       </div>
 
-      <label class="invoice-label">Payment Methods</label>
-      <input type="text" id="payment-methods" placeholder="e.g., Bank Transfer, PayPal" />
-
-      <label class="invoice-label">Your Contact Info</label>
-      <input type="text" id="contact-info" placeholder="Email: john@example.com | Phone: +123456789" />
-
-      <button onclick="generateInvoice()" class="generate-pdf-btn">Generate PDF</button>
+      <input type="text" id="payment-methods" placeholder="Payment Methods" />
+      <input type="email" id="contact-info" placeholder="Email: john@example.com" />
+      <button onclick="generatePDF()">🧾 Generate PDF</button>
     </section>
+
+    <footer>@XProductivityBot</footer>
   </div>
-  <footer>
-    @XProductivityBot
-  </footer>
+
   <script src="main.js"></script>
 </body>
 </html>
