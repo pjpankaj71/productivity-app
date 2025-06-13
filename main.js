@@ -1,13 +1,22 @@
 window.onload = () => {
+  // Enable dark mode by default
+  const body = document.body;
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+
+  body.classList.add('dark');
+  themeToggleBtn.textContent = '🌞'; // Emoji reflects dark mode state
+
+  // Handle splash fade-out
   setTimeout(() => {
     const splash = document.getElementById('splash-screen');
     splash.style.opacity = '0';
     setTimeout(() => {
       splash.style.display = 'none';
       document.getElementById('app').classList.remove('hidden');
-    }, 600); // match transition time
-  }, 1800); // shorter delay
+    }, 600);
+  }, 1800);
 };
+
 
 
 
