@@ -1,128 +1,101 @@
 // Telegram WebApp SDK
-window.Telegram.WebApp.ready();
-const user = Telegram.WebApp.initDataUnsafe?.user;
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById('splash-screen').style.display = 'none';
+    document.getElementById('app').classList.remove('hidden');
+  }, 2500);
+};
 
-// Hide loading animation after 1.5 seconds
-setTimeout(() => {
-  document.querySelector('.loading').style.display = 'none';
-}, 1500);
+// Dark Mode Toggle via Button
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+const body = document.body;
+let isDarkMode = false;
 
-// Task Manager
-function loadTasks() {
-  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-  const list = document.getElementById('task-list');
-  list.innerHTML = '';
-  tasks.forEach((task, index) => {
-    const li = document.createElement('li');
-    li.className = 'task-item';
-    li.innerHTML = `
-      ${task}
-      <button onclick="deleteTask(${index})" class="delete-btn">✕</button>
-    `;
-    list.appendChild(li);
-  });
-}
+themeToggleBtn.addEventListener('click', () => {
+  isDarkMode = !isDarkMode;
+  body.classList.toggle('dark', isDarkMode);
+  themeToggleBtn.textContent = isDarkMode ? '🌞' : '🌙';
+});
 
+// Add Task Functionality
 function addTask() {
-  const input = document.getElementById('new-task');
-  const task = input.value.trim();
-  if (!task) return;
-  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-  tasks.push(task);
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  input.value = '';
-  loadTasks();
+  const taskInput = document.getElementById('new-task');
+  const taskList = document.getElementById('task-list');
+  const taskText = taskInput.value.trim();
+
+  if (taskText !== '') {
+    const li = document.createElement('li');
+    li.classList.add('task-item');
+    li.innerHTML = `
+      ${taskText}
+      <button class="delete-btn" onclick="this.parentElement.remove()">❌</button>
+    `;
+    taskList.appendChild(li);
+    taskInput.value = '';
+  }
 }
 
-function deleteTask(index) {
-  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-  tasks.splice(index, 1);
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  loadTasks();
-}
-
-loadTasks();
-
-// PDF Generator
-async function generateInvoice() {
+// Generate Invoice PDF
+function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  const businessName = document.getElementById('business-name').value.trim();
-  const clientName = document.getElementById('client-name').value.trim();
-  const invoiceDate = document.getElementById('invoice-date').value;
-  const description = document.getElementById('description').value.trim();
-  const amount = document.getElementById('amount').value.trim();
-  const currency = document.getElementById('currency').value;
-  const paymentMethods = document.getElementById('payment-methods').value.trim();
-  const contactInfo = document.getElementById('contact-info').value.trim();
+  // Get inputs or defaults
+  const businessName = document.getElementById('business-name').value || 'XProductivity Inc.';
+  const clientName = document.getElementById('client-name').value || 'John Doe';
+  const invoiceDate = document.getElementById('invoice-date').value || new Date().toISOString().split('T')[0];
+  const description = document.getElementById('description').value || 'Freelance development & design services';
+  const amount = document.getElementById('amount').value || '500';
+  const currency = document.getElementById('currency').value || 'USD ($)';
+  const paymentMethods = document.getElementById('payment-methods').value || 'UPI, PayPal, Bank Transfer';
+  const contactInfo = document.getElementById('contact-info').value || 'email@example.com';
 
-  // Currency symbols mapping
-  const currencySymbols = {
-    USD: "$",
-    INR: "₹",
-    RUB: "₽",
-    IDR: "Rp",
-    BRL: "R$"
-  };
+  // Header
+  doc.setFontSize(22);
+  doc.setTextColor(0, 178, 127);
+  doc.text(`${businessName}`, 10, 20);
 
-  const symbol = currencySymbols[currency] || currency;
-
-  if (!clientName || !amount || !businessName) {
-    alert('Please fill in at least: Your Name, Client Name, and Amount.');
-    return;
-  }
-
-  let y = 20;
-
-  // Title
-  doc.setFontSize(18);
-  doc.text("INVOICE", 10, y);
-  y += 10;
-
-  // Divider
-  doc.setDrawColor(200, 200, 200);
-  doc.line(10, y, 200, y);
-  y += 10;
-
-  // Business & Client Info
   doc.setFontSize(12);
-  doc.text(`From: ${businessName}`, 10, y); y += 7;
-  doc.text(`To: ${clientName}`, 10, y); y += 10;
+  doc.setTextColor(100);
+  doc.text(`Date: ${invoiceDate}`, 150, 20, { align: 'right' });
 
-  // Dates
-  if (invoiceDate) {
-    doc.text(`Invoice Date: ${invoiceDate}`, 10, y); y += 7;
-  }
+  doc.setDrawColor(0, 178, 127);
+  doc.line(10, 25, 200, 25); // horizontal line
 
-  // Description
-  if (description) {
-    y += 7;
-    doc.text(`Description: ${description}`, 10, y); y += 7;
-  }
+  // Client Details
+  doc.setTextColor(0);
+  doc.setFontSize(14);
+  doc.text(`Billed To:`, 10, 35);
+  doc.setFontSize(12);
+  doc.text(`${clientName}`, 10, 42);
 
-  // Amount
-  doc.text(`Amount Due: ${symbol}${amount}`, 10, y); y += 10;
+  // Invoice Details
+  doc.setFontSize(14);
+  doc.text(`Description`, 10, 55);
+  doc.setFontSize(12);
+  doc.text(description, 10, 62, { maxWidth: 180 });
 
-  // Payment Methods
-  if (paymentMethods) {
-    doc.text(`Payment Methods: ${paymentMethods}`, 10, y); y += 7;
-  }
+  doc.setFontSize(14);
+  doc.text(`Amount`, 10, 80);
+  doc.setFontSize(12);
+  doc.text(`${currency} ${amount}`, 10, 87);
 
-  // Contact Info
-  if (contactInfo) {
-    y += 10;
-    doc.text(`Contact Info:`, 10, y); y += 7;
-    doc.text(`${contactInfo}`, 10, y); y += 10;
-  }
+  // Payment
+  doc.setFontSize(14);
+  doc.text(`Payment Methods`, 10, 100);
+  doc.setFontSize(12);
+  doc.text(paymentMethods, 10, 107);
+
+  doc.setFontSize(14);
+  doc.text(`Contact Info`, 10, 120);
+  doc.setFontSize(12);
+  doc.text(contactInfo, 10, 127);
 
   // Footer
-  y += 10;
-  doc.setFillColor(240, 240, 240);
-  doc.rect(0, y, 210, 30, 'F');
-  doc.setTextColor(100, 100, 100);
-  doc.text("Thank you for your business!", 10, y + 10);
+  doc.setFontSize(10);
+  doc.setTextColor(150);
+  doc.text("Generated with XProductivity | @XProductivityBot", 10, 285);
 
-  // Save PDF
-  doc.save('invoice.pdf');
+  // Save
+  doc.save(`Invoice_${clientName.replaceAll(' ', '_')}.pdf`);
 }
