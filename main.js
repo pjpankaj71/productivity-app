@@ -19,6 +19,7 @@ window.onload = () => {
 
 
 
+
 // Rewarded Popup
 
 show_9443322('pop').then(() => {
@@ -28,6 +29,19 @@ show_9443322('pop').then(() => {
     // user get error during playing ad
     // do nothing or whatever you want
 })
+
+
+
+// Rewarded interstitial
+
+show_9443322().then(() => {
+    // You need to add your user reward function here, which will be executed after the user watches the ad.
+    // For more details, please refer to the detailed instructions.
+    alert('You have seen an ad!');
+})
+
+
+
 
         
 
