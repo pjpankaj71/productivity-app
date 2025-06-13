@@ -1,10 +1,15 @@
-// Telegram WebApp SDK
 window.onload = () => {
   setTimeout(() => {
-    document.getElementById('splash-screen').style.display = 'none';
-    document.getElementById('app').classList.remove('hidden');
-  }, 2500);
+    const splash = document.getElementById('splash-screen');
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.style.display = 'none';
+      document.getElementById('app').classList.remove('hidden');
+    }, 600); // match transition time
+  }, 1800); // shorter delay
 };
+
+
 
 // Dark Mode Toggle via Button
 const themeToggleBtn = document.getElementById('theme-toggle-btn');
